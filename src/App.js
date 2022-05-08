@@ -1,23 +1,19 @@
-import './App.css';
-import React from 'react';
+import "./App.css";
+import React from "react";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import Proveedor from './components/Proveedor/Proveedor';
-import Municipio from './components/Municipio/Municipio';
-import Colonia from './components/Colonia/Colonia';
-import NavBar from './components/Header/NavBar';
-
+import Proveedor from "./components/Proveedor/Proveedor";
+import Municipio from "./components/Municipio/Municipio";
+import Colonia from "./components/Colonia/Colonia";
+import NavBar from "./components/Header/NavBar";
 class App extends React.Component {
-
     render() {
         return (<Router>
-
             <div>
                 <NavBar></NavBar>
                 <Routes>
                     <Route exact path="/"
-
                         element={
-                            <><div>Home</div></>
+                            <>Home</>
                     }></Route>
                     <Route path="/proveedor"
                         element={
@@ -33,7 +29,7 @@ class App extends React.Component {
                     }></Route>
                 </Routes>
             </div>
-        </Router>)
+        </Router>);
     }
 }
 
