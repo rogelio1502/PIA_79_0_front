@@ -7,12 +7,17 @@ export default class Proveedor extends React.Component {
         columns: [
             {
                 "name": 'Id'
-            }, {
+            },
+            {
                 "name": 'Nombre'
-            }, {
+            },
+            {
                 "name": 'Fecha de Registro'
-            }, {
+            },
+            {
                 "name": 'Telefono'
+            }, {
+                "name": 'CP'
             }
         ]
     }
@@ -25,6 +30,7 @@ export default class Proveedor extends React.Component {
                 element.push(e.Nombre);
                 element.push(e.FecRegistro);
                 element.push(e.Tel);
+                element.push(e.CP);
                 new_data.push(element);
             })
             this.setState({data: new_data})
@@ -34,8 +40,9 @@ export default class Proveedor extends React.Component {
     }
     render() {
         return (<div className="container-md mt-3">
-            Proveedor
-            <div> 
+            <h2>Proveedor</h2>
+
+            <div>
                 <Table columns={
                         this.state.columns
                     }

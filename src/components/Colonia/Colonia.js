@@ -20,7 +20,7 @@ export default class Colonia extends React.Component {
                 let element = []
                 element.push(e.IdColonia);
                 element.push(e.NomColonia);
-                
+
                 new_data.push(element);
             })
             this.setState({data: new_data})
@@ -30,15 +30,16 @@ export default class Colonia extends React.Component {
     }
     render() {
         return (<div className="container-md mt-3">
-        Colonia
-        <div> 
-            <Table columns={
-                    this.state.columns
-                }
-                data={
-                    this.state.data
-            }></Table>
-        </div>
-    </div>)
+            <h2>Colonia</h2>
+
+            <div>
+                <Table columns={
+                        this.state.columns
+                    }
+                    data={
+                        this.state.data
+                }></Table>
+            </div>
+        </div>)
     }
 }

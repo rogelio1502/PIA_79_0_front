@@ -29,7 +29,7 @@ export default class Municipio extends React.Component {
     }
     render() {
         return (<div className="container-md mt-3">
-        Municipio
+        <h2>Municipio</h2>
         <div> 
             <Table columns={
                     this.state.columns

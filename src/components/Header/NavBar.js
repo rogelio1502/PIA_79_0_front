@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 export default class NavBar extends React.Component {
     render() {
-        return (<nav className="navbar navbar-expand-lg navbar-light bg-light">
+        return (<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
                 <a className="navbar-brand" href="#">PIA</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,15 +15,15 @@ export default class NavBar extends React.Component {
 
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/proveedor">Proveedor</Link>
+                            <Link className="nav-link active" to="/proveedor">Proveedor</Link>
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link" to="/municipio">Municipio</Link>
+                            <Link className="nav-link active" to="/municipio">Municipio</Link>
 
                         </li>
                         <li className='nav-item'>
-                            <Link className='nav-link' to="/colonia">Colonia</Link>
+                            <Link className='nav-link active' to="/colonia">Colonia</Link>
 
                         </li>
                     </ul>
