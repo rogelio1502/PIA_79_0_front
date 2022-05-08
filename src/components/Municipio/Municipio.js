@@ -1,6 +1,7 @@
 import React from "react";
 import Table from "../../Table";
 import axios from 'axios'
+import Swal from "sweetalert2";
 export default class Municipio extends React.Component {
     state = {
         data: [],
@@ -9,7 +10,8 @@ export default class Municipio extends React.Component {
                 "name": 'Id'
             }, {
                 "name": 'Nombre'
-            }
+            },
+            
         ]
     }
     componentDidMount = () => {
@@ -27,16 +29,52 @@ export default class Municipio extends React.Component {
             alert("Error al obtener los datos")
         })
     }
+    delete = (id) => {
+        let obj = this.state.data.filter((e) => {
+            if (e[0] === id) {
+                return e
+            }
+        })
+        Swal.fire({
+            icon: "warning",
+            title: "¿Desea Eliminar el registro con id " + id + "?",
+            showCancelButton: "Cancelar",
+            showConfirmButton: "Eliminar"
+        }).then((response) => {
+            if (response.isConfirmed) {
+                Swal.fire({title: "Tarea Completada", icon: "success"})
+            }
+        })
+
+    }
+    update = (id) => {
+        let obj = this.state.data.filter((e) => {
+            if (e[0] === id) {
+                return e
+            }
+        })
+    }
+
+    add = () => {
+
+    }
     render() {
         return (<div className="container-md mt-3">
         <h2>Municipio</h2>
         <div> 
+            <div>
+                <button onClick={this.add} >Agregar</button>
+            </div>
             <Table columns={
                     this.state.columns
                 }
                 data={
                     this.state.data
-            }></Table>
+            }
+            delete={this.delete}
+            update={this.update}
+
+            ></Table>
         </div>
     </div>)
     }

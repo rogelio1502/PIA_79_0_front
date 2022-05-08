@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios'
 import Table from "../../Table";
+import Swal from "sweetalert2";
 
 export default class Colonia extends React.Component {
     state = {
@@ -10,6 +11,9 @@ export default class Colonia extends React.Component {
                 "name": 'Id'
             }, {
                 "name": 'Nombre'
+            },
+            {
+                "name" : "Municipio"
             }
         ]
     }
@@ -20,12 +24,38 @@ export default class Colonia extends React.Component {
                 let element = []
                 element.push(e.IdColonia);
                 element.push(e.NomColonia);
+                element.push(e.IdMunicipio);
 
                 new_data.push(element);
             })
             this.setState({data: new_data})
         }).catch((err) => {
             alert("Error al obtener los datos")
+        })
+    }
+    delete = (id) => {
+        let obj = this.state.data.filter((e) => {
+            if (e[0] === id) {
+                return e
+            }
+        })
+        Swal.fire({
+            icon: "warning",
+            title: "¿Desea Eliminar el registro con id " + id + "?",
+            showCancelButton: "Cancelar",
+            showConfirmButton: "Eliminar"
+        }).then((response) => {
+            if (response.isConfirmed) {
+                Swal.fire({title: "Tarea Completada", icon: "success"})
+            }
+        })
+
+    }
+    update = (id) => {
+        let obj = this.state.data.filter((e) => {
+            if (e[0] === id) {
+                return e
+            }
         })
     }
     render() {
@@ -38,7 +68,11 @@ export default class Colonia extends React.Component {
                     }
                     data={
                         this.state.data
-                }></Table>
+                }
+                delete={this.delete}
+                update={this.update}
+
+                ></Table>
             </div>
         </div>)
     }

@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Table from '../../Table'
+import Swal from "sweetalert2";
 export default class Proveedor extends React.Component {
     state = {
         data: [],
@@ -38,18 +39,52 @@ export default class Proveedor extends React.Component {
             alert("Error al obtener los datos")
         })
     }
-    render() {
-        return (<div className="container-md mt-3">
-            <h2>Proveedor</h2>
 
-            <div>
-                <Table columns={
-                        this.state.columns
-                    }
-                    data={
-                        this.state.data
-                }></Table>
+    delete = (id) => {
+        let obj = this.state.data.filter((e) => {
+            if (e[0] === id) {
+                return e
+            }
+        })
+        Swal.fire({
+            icon: "warning",
+            title: "¿Desea Eliminar el registro con id " + id + "?",
+            showCancelButton: "Cancelar",
+            showConfirmButton: "Eliminar"
+        }).then((response) => {
+            if (response.isConfirmed) {
+                Swal.fire({title: "Tarea Completada", icon: "success"})
+            }
+        })
+
+    }
+    update = (id) => {
+        let obj = this.state.data.filter((e) => {
+            if (e[0] === id) {
+                return e
+            }
+        })
+    }
+    render() {
+        return (
+            <div className="container-md mt-3">
+                <h2>Proveedor</h2>
+
+                <div>
+                    <Table columns={
+                            this.state.columns
+                        }
+                        data={
+                            this.state.data
+                        }
+                        delete={
+                            this.delete
+                        }
+                        update={
+                            this.update
+                    }></Table>
+                </div>
             </div>
-        </div>)
+        )
     }
 }

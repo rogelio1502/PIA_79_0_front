@@ -4,7 +4,11 @@ export default class Table extends React.Component {
     componentDidMount = () => {
         
     }
+
+    
+    
     render() {
+        let id =  0;
         return (<>
             <table className="table">
                 <thead>
@@ -15,7 +19,7 @@ export default class Table extends React.Component {
                                     e.name
                             }>{e.name}</th>
                     })
-                    }</tr>
+                    }<th>Acciones</th></tr>
                 </thead>
                 <tbody>{
                     this.props.data.map((e, i) => {
@@ -23,9 +27,15 @@ export default class Table extends React.Component {
                         }
                             {
                             e.map((x, i) => {
+                                if(i == 0){
+                                    id = x;
+                                }
                                 return <td key={i}> {x}</td>
                         })
-                        }</tr>
+                        }<td><div>
+                            <button onClick={this.props.delete.bind(this, id)}>Eliminar</button>
+                            <button onClick={this.props.update.bind(this, id)}>Actualizar</button>
+                            </div></td></tr>
                 })
                 }</tbody>
             </table>
