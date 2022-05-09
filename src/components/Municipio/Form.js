@@ -18,7 +18,7 @@ export default class Form extends React.Component {
                         </button>
                     </div>
                     <form onSubmit={
-                        this.sendData
+                        this.props.handleSubmit
                     }>
                         <label>Nombre</label>
                         <input className="form-control" name="NomMunicipio" required
@@ -31,7 +31,15 @@ export default class Form extends React.Component {
 
 
                         <br></br>
-                        {/*<input type="submit" className="btn btn-success" value="Guardar"></input> */} </form>
+                        <input type="hidden" name="IdMunicipio"
+                            value={
+                                this.props.IdMunicipio
+                            }
+                            onChange={
+                                this.props.handleInputChange
+                        }></input>
+                        <input type="submit" className="btn btn-success" value="Guardar"></input>
+                    </form>
                 </div>
             </>
         )

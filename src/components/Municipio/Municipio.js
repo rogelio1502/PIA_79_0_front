@@ -21,9 +21,11 @@ export default class Municipio extends React.Component {
 
             ],
             id_colapse: "collapse-municipios",
-            NomMunicipio: ""
+            NomMunicipio: "",
+            IdMunicipio : 0
         }
         this.handleInputChange = this.handleInputChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     getData = () => {
@@ -51,6 +53,9 @@ export default class Municipio extends React.Component {
                 return e
             }
         })
+        if(!obj){
+            return
+        }
         Swal.fire({
             icon: "warning",
             title: "¿Desea Eliminar el registro con id " + id + "?",
@@ -58,7 +63,16 @@ export default class Municipio extends React.Component {
             showConfirmButton: "Eliminar"
         }).then((response) => {
             if (response.isConfirmed) {
-                Swal.fire({title: "Tarea Completada", icon: "success"})
+                axios.delete('http://localhost:5000/api/municipio/' + id).then(
+                    (response)=>{
+                        Swal.fire({title: "Tarea Completada", icon: "success"})
+                        this.getData();
+                    }
+                ).catch(
+                    (err)=>{
+                        Swal.fire({title: "Error al tratar de eliminar el Municipio", icon: "error"})
+                    }
+                )
             }
         })
 
@@ -71,6 +85,7 @@ export default class Municipio extends React.Component {
         })
         this.setState({NomMunicipio: obj[0][1]
         });
+        this.setState({IdMunicipio: obj[0][0]})
         document.getElementById(this.state.id_colapse).classList.add('show')
 
     }
@@ -81,13 +96,71 @@ export default class Municipio extends React.Component {
             [name]: value.replace("  ", " ")
         })
     }
+    handleSubmit(e) {
+        e.preventDefault()
+        let NomMunicipio = this.state.NomMunicipio;
+        let IdMunicipio = this.state.IdMunicipio;
+        
+        if(IdMunicipio === 0){
+            let json = {
+                NomMunicipio: NomMunicipio
+            }
+            axios.post("http://localhost:5000/api/municipio", json).then((response) => {
+                console.log(response);
+                this.getData();
+                this.setState({NomMunicipio: ""})
+                Swal.fire(
+                    {
+                        icon : "success",
+                        title : "Municipio Agregado con éxito."
+                    }
+                )
+            }).catch((err) => {
+                console.log(err);
+                Swal.fire(
+                    {
+                        icon : "error",
+                        title : "Error al tratar de agregar el Municipio."
+                    }
+                )
+            })
+        }
+        else if(IdMunicipio > 0){
+            let json = {
+                NomMunicipio: NomMunicipio
+            }
+            axios.put("http://localhost:5000/api/municipio/" + IdMunicipio, json).then((response) => {
+                console.log(response);
+                this.getData();
+                this.setState({NomMunicipio: ""})
+                this.setState({IdMunicipio: 0})
 
-    clear = () => {
-        this.setState({NomMunicipio: ""});
+                Swal.fire(
+                    {
+                        icon : "success",
+                        title : "Municipio Editado con éxito."
+                    }
+                )
+            }).catch((err) => {
+                console.log(err);
+                Swal.fire(
+                    {
+                        icon : "error",
+                        title : "Error al tratar de editar el Municipio."
+                    }
+                )
+            })
+        }
+        
 
     }
 
-    add = () => {}
+    clear = () => {
+        this.setState({NomMunicipio: ""});
+        this.setState({IdMunicipio : 0})
+
+    }
+
     render() {
         return (
             <div className="container-md mt-3">
@@ -103,8 +176,14 @@ this.clear}
                         NomMunicipio={
                             this.state.NomMunicipio
                         }
+                        IdMunicipio={
+                            this.state.IdMunicipio
+                        }
                         handleInputChange={
                             this.handleInputChange
+                        }
+                        handleSubmit={
+                            this.handleSubmit
                         }>
                         </Form>}></Accordion>
                     <div className="col-md-12 mt-2">

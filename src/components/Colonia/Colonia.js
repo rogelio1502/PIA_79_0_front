@@ -24,6 +24,8 @@ export default class Colonia extends React.Component {
             IdMunicipio: ""
         }
         this.handleInputChange = this.handleInputChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+
     }
 
     getData = () => {
@@ -59,7 +61,15 @@ export default class Colonia extends React.Component {
             showConfirmButton: "Eliminar"
         }).then((response) => {
             if (response.isConfirmed) {
-                Swal.fire({title: "Tarea Completada", icon: "success"})
+                axios.delete('http://localhost:5000/api/colonia/' + id).then((response) => {
+                    console.log(response);
+                    Swal.fire({title: "Tarea Completada", icon: "success"})
+                    this.getData();
+                }).catch((err) => {
+                    console.log(err);
+
+                    Swal.fire({title: "Ha ocurrido un error al eliminar la Colonia", icon: "error"})
+                })
             }
         })
 
@@ -85,6 +95,26 @@ export default class Colonia extends React.Component {
             [name]: value.replace("  ", " ")
         })
     }
+
+    handleSubmit(e) {
+        e.preventDefault()
+
+        let IdMunicipio = e.target.IdMunicipio.value;
+        let NomColonia = this.state.NomColonia;
+        let json = {
+            IdMunicipio: IdMunicipio,
+            NomColonia: NomColonia
+        }
+        console.log(json);
+        axios.post("http://localhost:5000/api/colonia", json).then((response) => {
+            console.log(response);
+            this.getData();
+            this.setState({NomColonia: ""})
+            Swal.fire({icon: "success", title: "Colonia Agregada con éxito."})
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
     clear = () => {
         this.setState({NomColonia: ""});
         this.setState({IdMunicipio: ""});
@@ -108,6 +138,9 @@ this.clear}
                         }
                         IdMunicipio={
                             this.state.IdMunicipio
+                        }
+                        handleSubmit={
+                            this.handleSubmit
                         }
                         handleInputChange={
                             this.handleInputChange
