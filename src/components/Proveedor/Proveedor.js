@@ -1,36 +1,65 @@
 import React from "react";
 import axios from "axios";
-import Table from '../../Table'
+import Table from '../Table'
 import Swal from "sweetalert2";
+import Accordion from "../Accordion";
+import Form from "./Form";
 export default class Proveedor extends React.Component {
-    state = {
-        data: [],
-        columns: [
-            {
-                "name": 'Id'
-            },
-            {
-                "name": 'Nombre'
-            },
-            {
-                "name": 'Fecha de Registro'
-            },
-            {
-                "name": 'Telefono'
-            }, {
-                "name": 'CP'
-            }
-        ]
+    constructor(props) {
+        super(props)
+        this.state = {
+            name: '',
+            data: [],
+            columns: [
+                {
+                    "name": 'Id'
+                },
+                {
+                    "name": 'Nombre'
+                },
+                {
+                    "name": 'Fecha de Registro'
+                },
+                {
+                    "name": 'Telefono'
+                }, {
+                    "name": "Calle y Número"
+                }, {
+                    "name": "Colonia"
+                }, {
+                    "name": 'CP'
+                }
+            ],
+            id_colapse: "collapse-proveedor",
+            Nombre: "",
+            IdProveedor: "",
+            FecRegistro: "",
+            Tel: "",
+            CP: "",
+            CalleN: "",
+            IdColonia: ""
+        }
+        this.handleInputChange = this.handleInputChange.bind(this)
     }
-    componentDidMount = () => {
+
+    handleInputChange(e) {
+        const {name, value} = e.target
+        
+        this.setState({[name]: value.replace("  ", " ")})
+    }
+
+
+    componentDidMount = async () => {
         axios.get('http://localhost:5000/api/proveedor').then((response) => {
             let new_data = [];
             response.data.forEach((e) => {
                 let element = []
                 element.push(e.IdProveedor);
                 element.push(e.Nombre);
-                element.push(e.FecRegistro);
+                element.push(e.FecRegistro.substr(0,10));
                 element.push(e.Tel);
+                element.push(e.CalleN);
+                element.push(e.IdColonia);
                 element.push(e.CP);
                 new_data.push(element);
             })
@@ -58,31 +87,82 @@ export default class Proveedor extends React.Component {
         })
 
     }
+
     update = (id) => {
         let obj = this.state.data.filter((e) => {
             if (e[0] === id) {
                 return e
             }
         })
+        this.setState({IdProvedor: obj[0][0]
+        });
+        this.setState({Nombre: obj[0][1]
+        });
+        this.setState({FecRegistro: obj[0][2]
+        });
+        this.setState({Tel: obj[0][3]
+        });
+        this.setState({CalleN: obj[0][4]
+        });
+        this.setState({IdColonia: obj[0][5]
+        });
+        this.setState({CP: obj[0][6]
+        });
+
+        document.getElementById(this.state.id_colapse).classList.add('show')
     }
     render() {
         return (
             <div className="container-md mt-3">
+
                 <h2>Proveedor</h2>
 
                 <div>
-                    <Table columns={
-                            this.state.columns
+                    <Accordion id_colapse={
+                            this.state.id_colapse
                         }
-                        data={
-                            this.state.data
+                        form={
+                        <Form
+                            Nombre={
+                        this.state.Nombre}
+                        Tel={
+                            this.state.Tel
                         }
-                        delete={
-                            this.delete
+                        IdColonia={
+                            this.state.IdColonia
                         }
-                        update={
-                            this.update
-                    }></Table>
+                        CalleN={
+                            this.state.CalleN
+                        }
+                        CP={
+                            this.state.CP
+                        }
+                        FecRegistro={
+                            this.state.FecRegistro
+                        }
+                        handleInputChange={
+                            this.handleInputChange
+                        }>
+                        </Form>}></Accordion>
+                    <div className="row">
+                        <div className="col-md-12"></div>
+                        <div className="col-md-12">
+                            <Table columns={
+                                    this.state.columns
+                                }
+                                data={
+                                    this.state.data
+                                }
+                                delete={
+                                    this.delete
+                                }
+                                update={
+                                    this.update
+                            }></Table>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         )

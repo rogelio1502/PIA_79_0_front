@@ -1,6 +1,6 @@
 import React from "react";
 import axios from 'axios'
-import Table from "../../Table";
+import Table from "../Table";
 import Swal from "sweetalert2";
 
 export default class Colonia extends React.Component {

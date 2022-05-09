@@ -1,7 +1,8 @@
 import React from "react";
-import Table from "../../Table";
+import Table from "../Table";
 import axios from 'axios'
 import Swal from "sweetalert2";
+
 export default class Municipio extends React.Component {
     state = {
         data: [],
@@ -11,7 +12,7 @@ export default class Municipio extends React.Component {
             }, {
                 "name": 'Nombre'
             },
-            
+
         ]
     }
     componentDidMount = () => {
@@ -21,7 +22,7 @@ export default class Municipio extends React.Component {
                 let element = []
                 element.push(e.IdMunicipio);
                 element.push(e.NomMunicipio);
-                
+
                 new_data.push(element);
             })
             this.setState({data: new_data})
@@ -55,28 +56,29 @@ export default class Municipio extends React.Component {
         })
     }
 
-    add = () => {
-
-    }
+    add = () => {}
     render() {
-        return (<div className="container-md mt-3">
-        <h2>Municipio</h2>
-        <div> 
-            <div>
-                <button onClick={this.add} >Agregar</button>
-            </div>
-            <Table columns={
-                    this.state.columns
-                }
-                data={
-                    this.state.data
-            }
-            delete={this.delete}
-            update={this.update}
+        return (
+            <div className="container-md mt-3">
+                <h2>Municipio</h2>
+                <button>Agregar</button>
+                <div>
 
-            ></Table>
-        </div>
-    </div>)
+                    <Table columns={
+                            this.state.columns
+                        }
+                        data={
+                            this.state.data
+                        }
+                        delete={
+                            this.delete
+                        }
+                        update={
+                            this.update
+                    }></Table>
+                </div>
+            </div>
+        )
     }
-    
+
 }
