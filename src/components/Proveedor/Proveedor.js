@@ -32,14 +32,15 @@ export default class Proveedor extends React.Component {
             ],
             id_colapse: "collapse-proveedor",
             Nombre: "",
-            IdProveedor: "",
+            IdProveedor: 0,
             FecRegistro: "",
             Tel: "",
             CP: "",
             CalleN: "",
-            IdColonia: ""
+            IdColonia: 0
         }
         this.handleInputChange = this.handleInputChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleInputChange(e) {
@@ -48,6 +49,69 @@ export default class Proveedor extends React.Component {
         this.setState({
             [name]: value.replace("  ", " ")
         })
+    }
+
+    handleSubmit(e){
+        e.preventDefault()
+        let IdProvedor = this.state.IdProveedor;
+        let Nombre = this.state.Nombre;
+        let FecRegistro = this.state.FecRegistro;
+        let CP = this.state.CP;
+        let Tel = this.state.Tel;
+        let CalleN = this.state.CalleN;
+        let IdColonia = e.target.IdColonia.value;
+        console.log(CP);
+        let json = {
+            Nombre : Nombre,
+            FecRegistro : FecRegistro,
+            CP : CP,
+            Tel : Tel,
+            CalleN : CalleN,
+            IdColonia : IdColonia,
+
+        }
+        console.log(json);
+        if(IdProvedor === 0 ){
+            axios.post('http://localhost:5000/api/proveedor',json).then(
+                (response)=>{
+                    console.log(response);
+                    this.getData();
+                    this.clear()
+                    Swal.fire({
+                        icon : "success",
+                        title : "Se ha agregado al Proveedor de forma exitosa."
+                    })
+                }
+            ).catch(
+                (err)=>{
+                    console.log(err);
+                    Swal.fire({
+                        icon : "error",
+                        title : "Ha ocurrido un error al tratar de agregar a un Proveedor."
+                    })
+                }
+            )
+        }else if(IdProvedor > 0){
+            axios.put('http://localhost:5000/api/proveedor/' + IdProvedor, json).then(
+                (response)=>{
+                    console.log(response);
+                    this.getData();
+                    this.clear();
+                    Swal.fire({
+                        icon : "success",
+                        title : "Se ha editado al Proveedor de forma exitosa."
+                    })
+                }
+            ).catch(
+                (err)=>{
+                    console.log(err);
+                    Swal.fire({
+                        icon : "error",
+                        title : "Ha ocurrido un error al tratar de editar al Proveedor."
+                    })
+                }
+            )
+        }
     }
 
     getData = () => {
@@ -87,7 +151,18 @@ export default class Proveedor extends React.Component {
             showConfirmButton: "Eliminar"
         }).then((response) => {
             if (response.isConfirmed) {
-                Swal.fire({title: "Tarea Completada", icon: "success"})
+                axios.delete('http://localhost:5000/api/proveedor/' + id).then(
+                    (response)=>{
+                        console.log(response);
+                        Swal.fire({title: "Tarea Completada", icon: "success"})
+                        this.getData();
+                    }
+                ).catch(
+                    (err)=>{
+                        console.log(err);
+                        Swal.fire({title: "Ha ocurrido un error al eliminar el Proveeedor.", icon: "error"})
+                    }
+                )
             }
         })
 
@@ -99,7 +174,7 @@ export default class Proveedor extends React.Component {
                 return e
             }
         })
-        this.setState({IdProvedor: obj[0][0]
+        this.setState({IdProveedor: obj[0][0]
         });
         this.setState({Nombre: obj[0][1]
         });
@@ -145,6 +220,9 @@ this.state.Nombre}
                         IdColonia={
                             this.state.IdColonia
                         }
+                        IdProveedor = {
+                            this.state.IdProveedor
+                        }
                         CalleN={
                             this.state.CalleN
                         }
@@ -153,6 +231,9 @@ this.state.Nombre}
                         }
                         FecRegistro={
                             this.state.FecRegistro
+                        }
+                        handleSubmit = {
+                            this.handleSubmit
                         }
                         handleInputChange={
                             this.handleInputChange

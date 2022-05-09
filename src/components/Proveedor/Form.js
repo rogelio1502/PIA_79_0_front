@@ -1,8 +1,26 @@
 import React from "react";
-
+import axios from "axios";
 
 export default class Form extends React.Component {
+    state = {
+        data: []
+    }
 
+    componentDidMount = () => {
+        axios.get('http://localhost:5000/api/colonia').then((response) => {
+            let new_data = [];
+            response.data.forEach((e) => {
+                let element = []
+                element.push(e.IdColonia);
+                element.push(e.NomColonia);
+
+                new_data.push(element);
+            })
+            this.setState({data: new_data})
+        }).catch((err) => {
+            alert("Error al obtener los datos de las colonias")
+        })
+    }
 
     render() {
         return (
@@ -15,7 +33,7 @@ export default class Form extends React.Component {
                         </button>
                     </div>
                     <form onSubmit={
-                        this.sendData
+                        this.props.handleSubmit
                     }>
                         <label>Nombre</label>
                         <input className="form-control" name="Nombre" required
@@ -44,14 +62,18 @@ export default class Form extends React.Component {
                             }
                             required></input>
                         <label>Colonia</label>
-                        <input className="form-control" name="IdColonia"
-                            value={
-                                this.props.IdColonia
-                            }
-                            onChange={
-                                this.props.handleInputChange
-                            }
-                            required></input>
+                        <select name="IdColonia" className="form-select">
+                            <optgroup> {
+                                this.state.data.map((e) => {
+                                    return <option value={
+                                        e[0]
+                                    }>
+                                        {
+                                        e[1]
+                                    }</option>
+                            })
+                            } </optgroup>
+                        </select>
                         <label>Código Postal</label>
                         <input className="form-control" name="CP"
                             value={
@@ -69,8 +91,15 @@ export default class Form extends React.Component {
                             onChange={
                                 this.props.handleInputChange
                         }></input>
+                        <input type="hidden" name="IdProveedor"
+                            value={
+                                this.props.IdProveedor
+                            }
+                            onChange={
+                                this.props.handleInputChange
+                        }></input>
                         <br></br>
-                        {/*<input type="submit" className="btn btn-success" value="Guardar"></input> */} </form>
+                        <input type="submit" className="btn btn-success" value="Guardar"></input>  </form>
                 </div>
             </>
         )
