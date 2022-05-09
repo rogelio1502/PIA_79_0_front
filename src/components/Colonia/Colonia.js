@@ -25,7 +25,8 @@ export default class Colonia extends React.Component {
         }
         this.handleInputChange = this.handleInputChange.bind(this)
     }
-    componentDidMount = () => {
+
+    getData = () => {
         axios.get('http://localhost:5000/api/colonia').then((response) => {
             let new_data = [];
             response.data.forEach((e) => {
@@ -40,6 +41,10 @@ export default class Colonia extends React.Component {
         }).catch((err) => {
             alert("Error al obtener los datos")
         })
+    }
+
+    componentDidMount = () => {
+        this.getData();
     }
     delete = (id) => {
         let obj = this.state.data.filter((e) => {
@@ -80,6 +85,11 @@ export default class Colonia extends React.Component {
             [name]: value.replace("  ", " ")
         })
     }
+    clear = () => {
+        this.setState({NomColonia: ""});
+        this.setState({IdMunicipio: ""});
+
+    }
 
     render() {
         return (
@@ -91,14 +101,24 @@ export default class Colonia extends React.Component {
                             this.state.id_colapse
                         }
                         form={<Form
-                            NomColonia={
-                            this.state.NomColonia}
-                            IdMunicipio={
-                                this.state.IdMunicipio}
+                            clear={
+this.clear}
+                        NomColonia={
+                            this.state.NomColonia
+                        }
+                        IdMunicipio={
+                            this.state.IdMunicipio
+                        }
                         handleInputChange={
                             this.handleInputChange
                         }>
                         </Form>}></Accordion>
+                    <div className="col-md-12 mt-2">
+                        <button className="btn btn-secondary"
+                            onClick={
+                                this.getData
+                        }>Refrescar</button>
+                    </div>
                     <Table columns={
                             this.state.columns
                         }

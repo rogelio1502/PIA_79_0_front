@@ -44,19 +44,20 @@ export default class Proveedor extends React.Component {
 
     handleInputChange(e) {
         const {name, value} = e.target
-        
-        this.setState({[name]: value.replace("  ", " ")})
+
+        this.setState({
+            [name]: value.replace("  ", " ")
+        })
     }
 
-
-    componentDidMount = async () => {
+    getData = () => {
         axios.get('http://localhost:5000/api/proveedor').then((response) => {
             let new_data = [];
             response.data.forEach((e) => {
                 let element = []
                 element.push(e.IdProveedor);
                 element.push(e.Nombre);
-                element.push(e.FecRegistro.substr(0,10));
+                element.push(e.FecRegistro.substr(0, 10));
                 element.push(e.Tel);
                 element.push(e.CalleN);
                 element.push(e.IdColonia);
@@ -67,6 +68,10 @@ export default class Proveedor extends React.Component {
         }).catch((err) => {
             alert("Error al obtener los datos")
         })
+    }
+
+    componentDidMount = async () => {
+        this.getData();
     }
 
     delete = (id) => {
@@ -111,6 +116,16 @@ export default class Proveedor extends React.Component {
 
         document.getElementById(this.state.id_colapse).classList.add('show')
     }
+
+    clear = () => {
+        this.setState({IdProvedor: ""});
+        this.setState({Nombre: ""});
+        this.setState({FecRegistro: ""});
+        this.setState({Tel: ""});
+        this.setState({CalleN: ""});
+        this.setState({IdColonia: ""});
+        this.setState({CP: ""});
+    }
     render() {
         return (
             <div className="container-md mt-3">
@@ -121,10 +136,9 @@ export default class Proveedor extends React.Component {
                     <Accordion id_colapse={
                             this.state.id_colapse
                         }
-                        form={
-                        <Form
+                        form={<Form
                             Nombre={
-                        this.state.Nombre}
+this.state.Nombre}
                         Tel={
                             this.state.Tel
                         }
@@ -142,11 +156,19 @@ export default class Proveedor extends React.Component {
                         }
                         handleInputChange={
                             this.handleInputChange
+                        }
+                        clear={
+                            this.clear
                         }>
                         </Form>}></Accordion>
                     <div className="row">
-                        <div className="col-md-12"></div>
-                        <div className="col-md-12">
+                        <div className="col-md-12 mt-2">
+                            <button className="btn btn-secondary"
+                                onClick={
+                                    this.getData
+                            }>Refrescar</button>
+                        </div>
+                        <div className="col-md-12 mt-2">
                             <Table columns={
                                     this.state.columns
                                 }

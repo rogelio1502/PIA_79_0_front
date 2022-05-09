@@ -6,7 +6,7 @@ import Accordion from "../Accordion";
 import Form from "./Form";
 
 export default class Municipio extends React.Component {
-    
+
 
     constructor(props) {
         super(props)
@@ -26,7 +26,7 @@ export default class Municipio extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this)
     }
 
-    componentDidMount = () => {
+    getData = () => {
         axios.get('http://localhost:5000/api/municipio').then((response) => {
             let new_data = [];
             response.data.forEach((e) => {
@@ -40,6 +40,10 @@ export default class Municipio extends React.Component {
         }).catch((err) => {
             alert("Error al obtener los datos")
         })
+    }
+
+    componentDidMount = () => {
+        this.getData();
     }
     delete = (id) => {
         let obj = this.state.data.filter((e) => {
@@ -78,6 +82,11 @@ export default class Municipio extends React.Component {
         })
     }
 
+    clear = () => {
+        this.setState({NomMunicipio: ""});
+
+    }
+
     add = () => {}
     render() {
         return (
@@ -89,13 +98,21 @@ export default class Municipio extends React.Component {
                             this.state.id_colapse
                         }
                         form={<Form
-                            NomMunicipio={
-                                this.state.NomMunicipio
-                            }
-                            handleInputChange={
-                                this.handleInputChange
+                            clear={
+this.clear}
+                        NomMunicipio={
+                            this.state.NomMunicipio
+                        }
+                        handleInputChange={
+                            this.handleInputChange
                         }>
                         </Form>}></Accordion>
+                    <div className="col-md-12 mt-2">
+                        <button className="btn btn-secondary"
+                            onClick={
+                                this.getData
+                        }>Refrescar</button>
+                    </div>
                     <Table columns={
                             this.state.columns
                         }

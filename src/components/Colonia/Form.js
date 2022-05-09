@@ -9,6 +9,14 @@ export default class Form extends React.Component {
             <>
 
                 <div>
+                    <div>
+                        <button className="btn btn-warning"
+                            onClick={
+                                this.props.clear
+                        }>
+                            Limpiar
+                        </button>
+                    </div>
                     <form onSubmit={
                         this.sendData
                     }>
