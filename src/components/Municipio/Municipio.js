@@ -165,7 +165,6 @@ export default class Municipio extends React.Component {
         return (
             <div className="container-md mt-3">
                 <h2 class="text-center">Municipio</h2>
-                <i class="bi bi-geo-fill"></i>
 
                 <div>
                     <Accordion id_colapse={
