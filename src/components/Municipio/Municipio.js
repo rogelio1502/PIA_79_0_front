@@ -2,19 +2,30 @@ import React from "react";
 import Table from "../Table";
 import axios from 'axios'
 import Swal from "sweetalert2";
+import Accordion from "../Accordion";
+import Form from "./Form";
 
 export default class Municipio extends React.Component {
-    state = {
-        data: [],
-        columns: [
-            {
-                "name": 'Id'
-            }, {
-                "name": 'Nombre'
-            },
+    
 
-        ]
+    constructor(props) {
+        super(props)
+        this.state = {
+            data: [],
+            columns: [
+                {
+                    "name": 'Id'
+                }, {
+                    "name": 'Nombre'
+                },
+
+            ],
+            id_colapse: "collapse-municipios",
+            NomMunicipio: ""
+        }
+        this.handleInputChange = this.handleInputChange.bind(this)
     }
+
     componentDidMount = () => {
         axios.get('http://localhost:5000/api/municipio').then((response) => {
             let new_data = [];
@@ -54,6 +65,17 @@ export default class Municipio extends React.Component {
                 return e
             }
         })
+        this.setState({NomMunicipio: obj[0][1]
+        });
+        document.getElementById(this.state.id_colapse).classList.add('show')
+
+    }
+    handleInputChange(e) {
+        const {name, value} = e.target
+
+        this.setState({
+            [name]: value.replace("  ", " ")
+        })
     }
 
     add = () => {}
@@ -61,9 +83,19 @@ export default class Municipio extends React.Component {
         return (
             <div className="container-md mt-3">
                 <h2>Municipio</h2>
-                <button>Agregar</button>
-                <div>
 
+                <div>
+                    <Accordion id_colapse={
+                            this.state.id_colapse
+                        }
+                        form={<Form
+                            NomMunicipio={
+                                this.state.NomMunicipio
+                            }
+                            handleInputChange={
+                                this.handleInputChange
+                        }>
+                        </Form>}></Accordion>
                     <Table columns={
                             this.state.columns
                         }

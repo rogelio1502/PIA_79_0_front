@@ -2,20 +2,28 @@ import React from "react";
 import axios from 'axios'
 import Table from "../Table";
 import Swal from "sweetalert2";
-
+import Form from "./Form";
+import Accordion from "../Accordion";
 export default class Colonia extends React.Component {
-    state = {
-        data: [],
-        columns: [
-            {
-                "name": 'Id'
-            }, {
-                "name": 'Nombre'
-            },
-            {
-                "name" : "Municipio"
-            }
-        ]
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            data: [],
+            columns: [
+                {
+                    "name": 'Id'
+                }, {
+                    "name": 'Nombre'
+                }, {
+                    "name": "Municipio"
+                }
+            ],
+            id_colapse: "collapse-colonias",
+            NomColonia: "",
+            IdMunicipio: ""
+        }
+        this.handleInputChange = this.handleInputChange.bind(this)
     }
     componentDidMount = () => {
         axios.get('http://localhost:5000/api/colonia').then((response) => {
@@ -57,23 +65,54 @@ export default class Colonia extends React.Component {
                 return e
             }
         })
+        console.log(obj);
+        this.setState({NomColonia: obj[0][1]
+        });
+        this.setState({IdMunicipio: obj[0][2]
+        });
+        document.getElementById(this.state.id_colapse).classList.add('show')
     }
+
+    handleInputChange(e) {
+        const {name, value} = e.target
+
+        this.setState({
+            [name]: value.replace("  ", " ")
+        })
+    }
+
     render() {
-        return (<div className="container-md mt-3">
-            <h2>Colonia</h2>
+        return (
+            <div className="container-md mt-3">
+                <h2>Colonia</h2>
 
-            <div>
-                <Table columns={
-                        this.state.columns
-                    }
-                    data={
-                        this.state.data
-                }
-                delete={this.delete}
-                update={this.update}
-
-                ></Table>
+                <div>
+                    <Accordion id_colapse={
+                            this.state.id_colapse
+                        }
+                        form={<Form
+                            NomColonia={
+                            this.state.NomColonia}
+                            IdMunicipio={
+                                this.state.IdMunicipio}
+                        handleInputChange={
+                            this.handleInputChange
+                        }>
+                        </Form>}></Accordion>
+                    <Table columns={
+                            this.state.columns
+                        }
+                        data={
+                            this.state.data
+                        }
+                        delete={
+                            this.delete
+                        }
+                        update={
+                            this.update
+                    }></Table>
+                </div>
             </div>
-        </div>)
+        )
     }
 }
