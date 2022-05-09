@@ -62,6 +62,14 @@ export default class Form extends React.Component {
                             } </optgroup>
                         </select>
 
+                        <input type="hidden" name="IdColonia"
+                            value={
+                                this.props.IdColonia
+                            }
+                            onChange={
+                                this.props.handleInputChange
+                        }></input>
+
 
                         <br></br>
                         <input type="submit" className="btn btn-success" value="Guardar"></input>

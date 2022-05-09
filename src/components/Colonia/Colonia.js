@@ -21,7 +21,8 @@ export default class Colonia extends React.Component {
             ],
             id_colapse: "collapse-colonias",
             NomColonia: "",
-            IdMunicipio: ""
+            IdMunicipio: 0,
+            IdColonia: 0
         }
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -80,7 +81,8 @@ export default class Colonia extends React.Component {
                 return e
             }
         })
-        console.log(obj);
+        this.setState({IdColonia: obj[0][0]
+        });
         this.setState({NomColonia: obj[0][1]
         });
         this.setState({IdMunicipio: obj[0][2]
@@ -98,26 +100,49 @@ export default class Colonia extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault()
-
+        let IdColonia =this.state.IdColonia;
         let IdMunicipio = e.target.IdMunicipio.value;
         let NomColonia = this.state.NomColonia;
-        let json = {
-            IdMunicipio: IdMunicipio,
-            NomColonia: NomColonia
+        if (IdColonia === 0) {
+            let json = {
+                IdMunicipio: IdMunicipio,
+                NomColonia: NomColonia
+            }
+            axios.post("http://localhost:5000/api/colonia", json).then((response) => {
+                console.log(response);
+                this.getData();
+                this.setState({NomColonia: ""})
+                this.setState({IdMunicipio: 0})
+                Swal.fire({icon: "success", title: "Colonia Agregada con éxito."})
+            }).catch((err) => {
+                console.log(err);
+                Swal.fire({icon: "error", title: "Error al agregar la Colonia."})
+
+            })
+        }else if(IdColonia > 0){
+            let json = {
+                IdMunicipio: IdMunicipio,
+                NomColonia: NomColonia
+            }
+            axios.put("http://localhost:5000/api/colonia/" + IdColonia, json).then((response) => {
+                console.log(response);
+                this.getData();
+                this.setState({NomColonia: ""})
+                this.setState({IdMunicipio: 0})
+                this.setState({IdColonia : 0})
+                Swal.fire({icon: "success", title: "Colonia Editada con éxito."})
+            }).catch((err) => {
+                console.log(err);
+                Swal.fire({icon: "error", title: "Error al editar la Colonia."})
+
+            })
         }
-        console.log(json);
-        axios.post("http://localhost:5000/api/colonia", json).then((response) => {
-            console.log(response);
-            this.getData();
-            this.setState({NomColonia: ""})
-            Swal.fire({icon: "success", title: "Colonia Agregada con éxito."})
-        }).catch((err) => {
-            console.log(err);
-        })
+
     }
     clear = () => {
         this.setState({NomColonia: ""});
         this.setState({IdMunicipio: ""});
+        this.setState({IdColonia: 0})
 
     }
 
@@ -139,6 +164,10 @@ this.clear}
                         IdMunicipio={
                             this.state.IdMunicipio
                         }
+                        IdColonia={
+                            this.state.IdColonia
+                        }
+
                         handleSubmit={
                             this.handleSubmit
                         }
