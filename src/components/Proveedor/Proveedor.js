@@ -205,7 +205,7 @@ export default class Proveedor extends React.Component {
         return (
             <div className="container-md mt-3">
 
-                <h2>Proveedor</h2>
+                <h2 class="text-center">Proveedor</h2>
 
                 <div>
                     <Accordion id_colapse={
@@ -244,7 +244,7 @@ this.state.Nombre}
                         </Form>}></Accordion>
                     <div className="row">
                         <div className="col-md-12 mt-2">
-                            <button className="btn btn-secondary"
+                            <button className="btn btn-success"
                                 onClick={
                                     this.getData
                             }>Refrescar</button>

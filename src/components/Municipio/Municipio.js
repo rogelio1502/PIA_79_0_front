@@ -164,7 +164,8 @@ export default class Municipio extends React.Component {
     render() {
         return (
             <div className="container-md mt-3">
-                <h2>Municipio</h2>
+                <h2 class="text-center">Municipio</h2>
+                <i class="bi bi-geo-fill"></i>
 
                 <div>
                     <Accordion id_colapse={
@@ -187,7 +188,7 @@ this.clear}
                         }>
                         </Form>}></Accordion>
                     <div className="col-md-12 mt-2">
-                        <button className="btn btn-secondary"
+                        <button className="btn btn-success"
                             onClick={
                                 this.getData
                         }>Refrescar</button>

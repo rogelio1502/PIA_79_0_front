@@ -10,7 +10,7 @@ export default class Table extends React.Component {
     render() {
         let id =  0;
         return (<>
-            <table className="table">
+            <table className="styled-table">
                 <thead>
                     <tr>{
                         this.props.columns.map((e, i) => {
