@@ -39,7 +39,7 @@ export default class Form extends React.Component {
                         this.props.handleSubmit
                     }>
                         <label>Nombre</label>
-                        <input className="form-control" name="Nombre" required
+                        <input className="form-control" name="Nombre" required maxLength="50"
                             value={
                                 this.props.Nombre
                             }
@@ -47,7 +47,7 @@ export default class Form extends React.Component {
                                 this.props.handleInputChange
                         }></input>
                         <label>Telefono</label>
-                        <input className="form-control" name="Tel"
+                        <input className="form-control" name="Tel" maxLength="10"
                             value={
                                 this.props.Tel
                             }
@@ -56,7 +56,7 @@ export default class Form extends React.Component {
                             }
                             required></input>
                         <label>Calle Y Número</label>
-                        <input className="form-control" name="CalleN"
+                        <input className="form-control" name="CalleN" maxLength="50"
                             value={
                                 this.props.CalleN
                             }
@@ -78,7 +78,7 @@ export default class Form extends React.Component {
                             } </optgroup>
                         </select>
                         <label>Código Postal</label>
-                        <input className="form-control" name="CP"
+                        <input className="form-control" name="CP" maxLength="5"
                             value={
                                 this.props.CP
                             }

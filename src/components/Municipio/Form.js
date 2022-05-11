@@ -21,7 +21,7 @@ export default class Form extends React.Component {
                         this.props.handleSubmit
                     }>
                         <label>Nombre</label>
-                        <input className="form-control" name="NomMunicipio" required
+                        <input className="form-control" name="NomMunicipio" required maxLength="50"
                             value={
                                 this.props.NomMunicipio
                             }
