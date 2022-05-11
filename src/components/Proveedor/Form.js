@@ -28,7 +28,10 @@ export default class Form extends React.Component {
 
                 <div>
                     <div>
-                        <button className="btn btn-warning" onClick={this.props.clear}>
+                        <button className="btn btn-warning"
+                            onClick={
+                                this.props.clear
+                        }>
                             Limpiar
                         </button>
                     </div>
@@ -99,7 +102,8 @@ export default class Form extends React.Component {
                                 this.props.handleInputChange
                         }></input>
                         <br></br>
-                        <input type="submit" className="btn btn-success" value="Guardar"></input>  </form>
+                        <input type="submit" className="btn btn-success" value="Guardar"></input>
+                    </form>
                 </div>
             </>
         )
