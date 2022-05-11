@@ -93,6 +93,10 @@ export default class Colonia extends React.Component {
     handleInputChange(e) {
         const {name, value} = e.target
 
+        if (value === " ") {
+            value = ""
+        }
+
         this.setState({
             [name]: value.replace("  ", " ")
         })
@@ -100,7 +104,7 @@ export default class Colonia extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault()
-        let IdColonia =this.state.IdColonia;
+        let IdColonia = this.state.IdColonia;
         let IdMunicipio = e.target.IdMunicipio.value;
         let NomColonia = this.state.NomColonia;
         if (IdColonia === 0) {
@@ -119,7 +123,7 @@ export default class Colonia extends React.Component {
                 Swal.fire({icon: "error", title: "Error al agregar la Colonia."})
 
             })
-        }else if(IdColonia > 0){
+        } else if (IdColonia > 0) {
             let json = {
                 IdMunicipio: IdMunicipio,
                 NomColonia: NomColonia
@@ -129,7 +133,7 @@ export default class Colonia extends React.Component {
                 this.getData();
                 this.setState({NomColonia: ""})
                 this.setState({IdMunicipio: 0})
-                this.setState({IdColonia : 0})
+                this.setState({IdColonia: 0})
                 Swal.fire({icon: "success", title: "Colonia Editada con éxito."})
             }).catch((err) => {
                 console.log(err);

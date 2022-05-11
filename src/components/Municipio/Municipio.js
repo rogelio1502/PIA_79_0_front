@@ -22,7 +22,7 @@ export default class Municipio extends React.Component {
             ],
             id_colapse: "collapse-municipios",
             NomMunicipio: "",
-            IdMunicipio : 0
+            IdMunicipio: 0
         }
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -53,7 +53,7 @@ export default class Municipio extends React.Component {
                 return e
             }
         })
-        if(!obj){
+        if (! obj) {
             return
         }
         Swal.fire({
@@ -63,16 +63,12 @@ export default class Municipio extends React.Component {
             showConfirmButton: "Eliminar"
         }).then((response) => {
             if (response.isConfirmed) {
-                axios.delete('http://localhost:5000/api/municipio/' + id).then(
-                    (response)=>{
-                        Swal.fire({title: "Tarea Completada", icon: "success"})
-                        this.getData();
-                    }
-                ).catch(
-                    (err)=>{
-                        Swal.fire({title: "Error al tratar de eliminar el Municipio", icon: "error"})
-                    }
-                )
+                axios.delete('http://localhost:5000/api/municipio/' + id).then((response) => {
+                    Swal.fire({title: "Tarea Completada", icon: "success"})
+                    this.getData();
+                }).catch((err) => {
+                    Swal.fire({title: "Error al tratar de eliminar el Municipio", icon: "error"})
+                })
             }
         })
 
@@ -85,12 +81,17 @@ export default class Municipio extends React.Component {
         })
         this.setState({NomMunicipio: obj[0][1]
         });
-        this.setState({IdMunicipio: obj[0][0]})
+        this.setState({IdMunicipio: obj[0][0]
+        })
         document.getElementById(this.state.id_colapse).classList.add('show')
 
     }
     handleInputChange(e) {
         const {name, value} = e.target
+
+        if (value === " ") {
+            value = ""
+        }
 
         this.setState({
             [name]: value.replace("  ", " ")
@@ -100,8 +101,8 @@ export default class Municipio extends React.Component {
         e.preventDefault()
         let NomMunicipio = this.state.NomMunicipio;
         let IdMunicipio = this.state.IdMunicipio;
-        
-        if(IdMunicipio === 0){
+
+        if (IdMunicipio === 0) {
             let json = {
                 NomMunicipio: NomMunicipio
             }
@@ -109,23 +110,12 @@ export default class Municipio extends React.Component {
                 console.log(response);
                 this.getData();
                 this.setState({NomMunicipio: ""})
-                Swal.fire(
-                    {
-                        icon : "success",
-                        title : "Municipio Agregado con éxito."
-                    }
-                )
+                Swal.fire({icon: "success", title: "Municipio Agregado con éxito."})
             }).catch((err) => {
                 console.log(err);
-                Swal.fire(
-                    {
-                        icon : "error",
-                        title : "Error al tratar de agregar el Municipio."
-                    }
-                )
+                Swal.fire({icon: "error", title: "Error al tratar de agregar el Municipio."})
             })
-        }
-        else if(IdMunicipio > 0){
+        } else if (IdMunicipio > 0) {
             let json = {
                 NomMunicipio: NomMunicipio
             }
@@ -135,29 +125,19 @@ export default class Municipio extends React.Component {
                 this.setState({NomMunicipio: ""})
                 this.setState({IdMunicipio: 0})
 
-                Swal.fire(
-                    {
-                        icon : "success",
-                        title : "Municipio Editado con éxito."
-                    }
-                )
+                Swal.fire({icon: "success", title: "Municipio Editado con éxito."})
             }).catch((err) => {
                 console.log(err);
-                Swal.fire(
-                    {
-                        icon : "error",
-                        title : "Error al tratar de editar el Municipio."
-                    }
-                )
+                Swal.fire({icon: "error", title: "Error al tratar de editar el Municipio."})
             })
         }
-        
+
 
     }
 
     clear = () => {
         this.setState({NomMunicipio: ""});
-        this.setState({IdMunicipio : 0})
+        this.setState({IdMunicipio: 0})
 
     }
 
