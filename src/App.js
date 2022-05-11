@@ -13,7 +13,67 @@ class App extends React.Component {
                 <Routes>
                     <Route exact path="/"
                         element={
-                            <>Home</>
+                            <><h1 className="text-center h1diseno">Equipo</h1>
+                            <div className="">
+                            <table className="table">
+
+                                <thead>
+                                    <tr>
+                                        <th>
+                                        Nombre
+                                        </th>
+                                        <th>
+                                        Matrícula
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                        Torres Pasillas Rogelio
+                                        </td>
+                                        <td>
+                                        1820938
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        Castro De los Santos Mario
+                                        </td>
+                                        <td>
+                                        1866855
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        Iñiguez Porras José Imanol
+                                        </td>
+                                        <td>
+                                        1872653
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        Saldaña Rodríguez Daniel Isaí
+                                        </td>
+                                        <td>
+                                        1604155
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        Sígala Hernández Sergio Daniel
+                                        </td>
+                                        <td>
+                                        1988828
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                            
+                            </div>
+                            </>
                     }></Route>
                     <Route path="/proveedor"
                         element={

@@ -8,7 +8,7 @@ export default class Table extends React.Component {
         let id = 0;
         return (
             <div className="table-responsive-md">
-                <table className="table">
+                <table className="styled-table">
                     <thead>
                         <tr>{
                             this.props.columns.map((e, i) => {
