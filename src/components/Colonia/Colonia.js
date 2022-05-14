@@ -107,6 +107,10 @@ export default class Colonia extends React.Component {
         let IdColonia = this.state.IdColonia;
         let IdMunicipio = e.target.IdMunicipio.value;
         let NomColonia = this.state.NomColonia;
+        if (IdMunicipio === "") {
+            Swal.fire({title: "Error", icon: "error", text: "Municipo no válido."})
+            return
+        }
         if (IdColonia === 0) {
             let json = {
                 IdMunicipio: IdMunicipio,

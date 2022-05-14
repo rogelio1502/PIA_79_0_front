@@ -50,6 +50,8 @@ export default class Proveedor extends React.Component {
         if (value === " ") {
             value = ""
         }
+        console.log(name);
+
         if ((name === "CP" || name === "Tel")) {
             var reg = new RegExp('^[0-9]*$');
 
@@ -74,7 +76,10 @@ export default class Proveedor extends React.Component {
         let Tel = this.state.Tel;
         let CalleN = this.state.CalleN;
         let IdColonia = e.target.IdColonia.value;
-        console.log(CP);
+        if (IdColonia === "") {
+            Swal.fire({icon: "error", text: "Colonia no es valida.", title: "Error"})
+            return
+        }
         let json = {
             Nombre: Nombre,
             FecRegistro: FecRegistro,
